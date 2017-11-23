@@ -38,7 +38,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.setTitle("To-Do List");
+        primaryStage.setTitle("GTA - Grand Task Auto");
 
         image = new Image("file:freedom.jpg");
         iv = new ImageView();
