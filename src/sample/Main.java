@@ -9,25 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
-import java.io.File;
 import java.util.ArrayDeque;
 
 public class Main extends Application {
 
-    Image image;
-    ImageView iv;
-    String musicFile;
-    Media sound;
-    MediaPlayer mediaPlayer;
+    MediaSource mediaSource;
     CheckBox box1;
     Button addButton;
     Button getTaskButton;
@@ -40,12 +30,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("GTA - Grand Task Auto");
 
-        image = new Image("file:freedom.jpg");
-        iv = new ImageView();
+        mediaSource = new MediaSource();
+        mediaSource.displayImage();
+        mediaSource.playMusicFile();
 
-        musicFile = "fanfary.mp3";
-        sound = new Media(new File(musicFile).toURI().toString());
-        mediaPlayer = new MediaPlayer(sound);
+
+
 
         Text text = new Text();
 
@@ -94,8 +84,8 @@ public class Main extends Application {
                 }
 
                 if (taskQueue.isEmpty()) {
-                    iv.setImage(image);
-                    mediaPlayer.play();
+                    mediaSource.iv.setImage(mediaSource.getImage());
+                    mediaSource.mediaPlayer.play();
                     box1.setDisable(true);
                     doneTaskButton.setDisable(true);
                 }
@@ -103,7 +93,7 @@ public class Main extends Application {
         });
 
         vbox = new VBox();
-        vbox.getChildren().addAll(txtField, addButton, getTaskButton, box1, doneTaskButton, iv);
+        vbox.getChildren().addAll(txtField, addButton, getTaskButton, box1, doneTaskButton, mediaSource.getIv());
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
