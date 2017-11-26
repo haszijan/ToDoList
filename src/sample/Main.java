@@ -4,11 +4,8 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,7 +16,7 @@ public class Main extends Application {
 
     MediaSource mediaSource;
     TextFieldManager textFieldManager;
-    CheckBox box1;
+    CheckBoxManager checkBoxManager;
     Button addButton;
     Button getTaskButton;
     Button doneTaskButton;
@@ -40,11 +37,10 @@ public class Main extends Application {
         textFieldManager = new TextFieldManager();
         textFieldManager.taskToDoTextField();
 
+        checkBoxManager = new CheckBoxManager();
+        checkBoxManager.doneTaskCheckBox();
 
-        box1 = new CheckBox();
-        box1.setAlignment(Pos.BOTTOM_LEFT);
-        box1.setLayoutX(10);
-        box1.setLayoutY(10);
+
 
         addButton = new Button();
         addButton.setText("Add task");
@@ -63,7 +59,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println(taskQueue.getFirst());
-                box1.setText(taskQueue.getFirst());
+                checkBoxManager.getCheckBox().setText(taskQueue.getFirst());
             }
         });
 
@@ -73,9 +69,9 @@ public class Main extends Application {
         doneTaskButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (box1.isSelected()) {
+                if (checkBoxManager.getCheckBox().isSelected()) {
                     taskQueue.remove();
-                    box1.setSelected(false);
+                    checkBoxManager.getCheckBox().setSelected(false);
                     doneTaskButton.setText("Done");
                 } else {
                     doneTaskButton.setText("No work, no food    --Paulo Coehlo");
@@ -84,14 +80,14 @@ public class Main extends Application {
                 if (taskQueue.isEmpty()) {
                     mediaSource.iv.setImage(mediaSource.getImage());
                     mediaSource.mediaPlayer.play();
-                    box1.setDisable(true);
+                    checkBoxManager.getCheckBox().setDisable(true);
                     doneTaskButton.setDisable(true);
                 }
             }
         });
 
         vbox = new VBox();
-        vbox.getChildren().addAll(textFieldManager.getTxtField(), addButton, getTaskButton, box1, doneTaskButton, mediaSource.getIv());
+        vbox.getChildren().addAll(textFieldManager.getTxtField(), addButton, getTaskButton, checkBoxManager.getCheckBox(), doneTaskButton, mediaSource.getIv());
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
