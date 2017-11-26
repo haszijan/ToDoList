@@ -18,11 +18,12 @@ import java.util.ArrayDeque;
 public class Main extends Application {
 
     MediaSource mediaSource;
+    TextFieldManager textFieldManager;
     CheckBox box1;
     Button addButton;
     Button getTaskButton;
     Button doneTaskButton;
-    TextField txtField;
+
     VBox vbox;
     ArrayDeque<String> taskQueue = new ArrayDeque<>();
 
@@ -34,14 +35,11 @@ public class Main extends Application {
         mediaSource.displayImage();
         mediaSource.playMusicFile();
 
-
-
-
         Text text = new Text();
 
-        txtField = new TextField();
-        txtField.setPromptText("Enter task to do.");
-        txtField.setPrefColumnCount(25);
+        textFieldManager = new TextFieldManager();
+        textFieldManager.taskToDoTextField();
+
 
         box1 = new CheckBox();
         box1.setAlignment(Pos.BOTTOM_LEFT);
@@ -54,7 +52,7 @@ public class Main extends Application {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                taskQueue.add(txtField.getText());
+                taskQueue.add(textFieldManager.getTxtField().getText());
             }
         });
 
@@ -93,7 +91,7 @@ public class Main extends Application {
         });
 
         vbox = new VBox();
-        vbox.getChildren().addAll(txtField, addButton, getTaskButton, box1, doneTaskButton, mediaSource.getIv());
+        vbox.getChildren().addAll(textFieldManager.getTxtField(), addButton, getTaskButton, box1, doneTaskButton, mediaSource.getIv());
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
